@@ -4,7 +4,7 @@ import pandas as pd
 from tqdm import tqdm
 
 # Define paths
-DATASET_DIR = Path("/Users/raffaelemannarelli/vision/nabirds")  # Change this to the NABirds dataset path
+DATASET_DIR = Path.cwd() / "nabirds"
 IMAGES_DIR = DATASET_DIR / "images"
 OUTPUT_DIR = Path("yolo_dataset")
 TRAIN_IMG_DIR = OUTPUT_DIR / "images/train"
