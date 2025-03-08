@@ -34,8 +34,7 @@ Extract the dataset into your project directory.
 
 ### **2. Clone the Repository**
 ```bash
-git clone <repo-url>
-cd your_project
+git clone https://github.com/raffaelemannarelli/bird-cam.git
 ```
 
 ### **3. Run the Setup Script**
