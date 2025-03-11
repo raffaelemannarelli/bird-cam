@@ -64,14 +64,17 @@ for _, row in tqdm(data.iterrows(), total=len(data)):
     
 
 # Create dataset.yaml file
-dataset_yaml = f"""
-train: {TRAIN_IMG_DIR.resolve()}
-val: {VAL_IMG_DIR.resolve()}
-nc: 555  # Number of classes
-names: ["species_1", "species_2", ..., "species_555"]  # Replace with actual names
-"""
+# dataset_yaml = f"""
+# train: {TRAIN_IMG_DIR.resolve()}
+# val: {VAL_IMG_DIR.resolve()}
+# nc: 555  # Number of classes
+# names: ["species_1", "species_2", ..., "species_555"]  # Replace with actual names
+# """
 
-with open(OUTPUT_DIR / "dataset.yaml", "w") as f:
-    f.write(dataset_yaml)
+# with open(OUTPUT_DIR / "dataset.yaml", "w") as f:
+#     f.write(dataset_yaml)
+
+# move the dataset.yaml to the pthe yolo_dataset directory
+shutil.move('dataset.yaml', OUTPUT_DIR)
 
 print("NABirds dataset converted to YOLO format successfully!")
