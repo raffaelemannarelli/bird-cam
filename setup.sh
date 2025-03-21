@@ -3,9 +3,7 @@
 # Define paths
 BASE_DIR=$(dirname "$(realpath "$0")")
 REQUIREMENTS_FILE="$BASE_DIR/requirements.txt"
-NABIRDS_ZIP="$BASE_DIR/nabirds.zip"
-NABIRDS_DIR="$BASE_DIR/nabirds"
-SCRIPT_FILE="$BASE_DIR/script/script.py"
+SCRIPT_FILE="$BASE_DIR/data/data_clean.py"
 
 # Create and activate virtual environment
 echo "Creating virtual environment..."
