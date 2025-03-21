@@ -1,8 +1,52 @@
+import requests
+import os
+import tarfile
+from tqdm import tqdm  # Import tqdm for progress bar
 from pathlib import Path
 import shutil
 import pandas as pd
-from tqdm import tqdm
 
+# Step 1: Download and extract the dataset
+# Dropbox shared link
+url = "https://www.dropbox.com/scl/fi/yas70u9uzkeyzrmrfwcru/nabirds.tar.gz?rlkey=vh0uduhckom5jyp73igjugqtr&e=1&dl=1"
+
+# File name and destination
+output_file = "nabirds.tar.gz"
+output_dir = "nabirds"
+
+# Download the file
+print("Downloading dataset...")
+response = requests.get(url, stream=True)
+total_size = int(response.headers.get('content-length', 0))  # Get total file size
+with open(output_file, "wb") as file, tqdm(
+    desc="Downloading",
+    total=total_size,
+    unit="B",
+    unit_scale=True,
+    unit_divisor=1024,
+) as progress_bar:
+    for chunk in response.iter_content(chunk_size=1024):
+        if chunk:
+            file.write(chunk)
+            progress_bar.update(len(chunk))  # Update progress bar
+
+print("Download complete!")
+
+# Extract the file
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
+print("Extracting dataset...")
+with tarfile.open(output_file, "r:gz") as tar:
+    tar.extractall(path=output_dir)
+
+print(f"Dataset extracted to {output_dir}")
+
+# Optional: Remove the tar file after extraction
+os.remove(output_file)
+print("Cleanup complete!")
+
+# Step 2: Process the dataset (existing code)
 # Define paths
 DATASET_DIR = Path.cwd() / "nabirds"
 IMAGES_DIR = DATASET_DIR / "images"
@@ -61,18 +105,6 @@ for _, row in tqdm(data.iterrows(), total=len(data)):
     # Write YOLO label file
     with open(label_dest, "w") as f:
         f.write(label_content)
-    
-
-# Create dataset.yaml file
-# dataset_yaml = f"""
-# train: {TRAIN_IMG_DIR.resolve()}
-# val: {VAL_IMG_DIR.resolve()}
-# nc: 555  # Number of classes
-# names: ["species_1", "species_2", ..., "species_555"]  # Replace with actual names
-# """
-
-# with open(OUTPUT_DIR / "dataset.yaml", "w") as f:
-#     f.write(dataset_yaml)
 
 # move the dataset.yaml to the pthe yolo_dataset directory
 shutil.move('dataset.yaml', OUTPUT_DIR)
