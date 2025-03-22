@@ -14,4 +14,4 @@ model.to(device)
 
 # Train the model
 dataset_path = SCRIPT_DIR / "yolo_dataset/dataset.yaml"
-results = model.train(data=str(dataset_path), epochs=100, imgsz=640, device=device)
+results = model.train(data=str(dataset_path), epochs=1, imgsz=640, device=device)
